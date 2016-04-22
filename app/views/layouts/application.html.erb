@@ -2,13 +2,24 @@
 <html>
 <head>
   <title>Bloccit</title>
+  <meta name = "viewport" content = "width=device-width, initial-scale=1">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+    <div class = "container">
+      <ul class = "nav nav-tabs">
+        <li><%= link_to "Home", welcome_index_path %></li>
+        <li><%= link_to "About", welcome_about_path %></li>
+        <li><%= link_to "FAQ", welcome_faq_path %></li>
+      </ul>
 
-<%= yield %>
+      <%= link_to "Facebook", "https://www.facebook.com/reddit", class: "social-btn" %>
+
+      <%= yield %>
+
+    </div>
 
 </body>
 </html>
