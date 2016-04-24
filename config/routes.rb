@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
-  get 'welcome/index'
 
-  get 'welcome/about'
+  # The 'resources' method instructs Rails to create routes for CRUD actions,
+  # replacing the 'get resource/action' sytax for each route.
+  resources :posts
 
-  get 'welcome/contact'
+  # The following route specication allows users to vist /about etc instead of
+  # welcome/about etc
+  get 'about' => 'welcome#about'
 
-  get 'welcome/faq'
+  get 'contact' => 'welcome#contact'
+
+  get 'faq' => 'welcome#faq'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
