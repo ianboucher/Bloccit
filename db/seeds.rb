@@ -31,12 +31,29 @@ Comment.find_or_create_by!(
   post: posts.find_by(title: "Ian's Example Post"),
   body: "Example comment created by Ian")
 
+# Create questions
+
+20.times do
+
+  Question.create!(
+    title: RandomData.random_sentence,
+    body:  RandomData.random_paragraph,
+    resolved: false
+  )
+end
+
+Question.find_or_create_by!(
+  title: "Ian's Example Question",
+  body: "This is an example question added to check the database",
+  resolved: false
+  )
+
+questions = Question.all
+
 # Create advertisements
 
 10.times do
-  # Create is called with a bang! which in this case instruct the method to raise
-  # an error if there's a problem with the data we're inputting. Without the bang,
-  # it could fail without warning.
+
   Advertisement.create!(
     title: RandomData.random_sentence,
     body:  RandomData.random_paragraph,
@@ -55,4 +72,5 @@ advertisements = Advertisement.all
 puts "Seed finished"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
+puts "#{Question.count} questions created"
 puts "#{Advertisement.count} advertisements created"

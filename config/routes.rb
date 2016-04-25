@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :posts
 
   resources :advertisements
+
+  resources :questions
   # The following route specication allows users to vist /about etc instead of
   # welcome/about etc
   get 'about' => 'welcome#about'
