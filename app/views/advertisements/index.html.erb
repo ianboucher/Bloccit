@@ -1,0 +1,15 @@
+<h1>All Posts</h1>
+<!-- Iterate over each ad in @advertisements. Instance variables created in a controller -->
+<!-- method are available in the corresponing view  -->
+<% @advertisements.each do |ad| %>
+  <div class="media">
+    <div class="media-body">
+      <h4 class="media-heading">
+        <!-- Rails allows us to replace the 2nd argument, 'advertisement_path(ad.id)'
+        method with 'ad' (see variable above). Rails will then detect the object,
+        parse its id and create the path -->
+        <%= link_to ad.title, ad %>
+      </h4>
+    </div>
+  </div>
+<% end %>

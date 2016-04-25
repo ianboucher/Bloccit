@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # replacing the 'get resource/action' sytax for each route.
   resources :posts
 
+  resources :advertisements
   # The following route specication allows users to vist /about etc instead of
   # welcome/about etc
   get 'about' => 'welcome#about'

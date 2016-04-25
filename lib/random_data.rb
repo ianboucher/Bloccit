@@ -26,4 +26,9 @@ module RandomData
     # Join 0th - nth item in letters. nth is the result of rand(3..8)
     letters[0, rand(3..8)].join
   end
+
+  def self.random_number
+    rand(5..15)
+  end
+
 end
