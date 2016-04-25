@@ -2,14 +2,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all
-    # This works, but I feel like it should be possible to do with a 'where' or
-    # a 'select' method directly on the ActiveRecord object. Couldn't make either
-    # work though...
-    # @posts.each_with_index do |post, i|
-    #   if i % 5 == 0
-    #     post.update(title: 'SPAM')
-    #   end
-    # end
+    # 'SPAM' filter removed
   end
 
   def create
@@ -28,6 +21,7 @@ class PostsController < ApplicationController
       flash[:notice] = "Post was saved successfully."
       redirect_to @post
     else
+      # Should I remove flash.now here as well?
       flash.now[:alert] = "There was an error saving the post. Please try again."
       render :new
     end
