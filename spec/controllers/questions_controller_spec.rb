@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
 
   let(:my_question) { Question.create!(title: RandomData.random_sentence,
-    body: RandomData.random_paragraph) }
+    body: RandomData.random_paragraph, resolved: false) }
 
   describe "GET #index" do
 
@@ -40,19 +40,25 @@ RSpec.describe QuestionsController, type: :controller do
   describe "POST create" do
 
     it "increases the question number by 1" do
-      expect{post :create, question: { title: RandomData.random_sentence,
-        body: RandomData.random_paragraph }}.to change(Question, :count).by(1)
+      expect{post :create, question: {
+        title: RandomData.random_sentence,
+        body: RandomData.random_paragraph,
+        resolved: false }}.to change(Question, :count).by(1)
     end
 
     it "assigns the new question to @question" do
-      post :create, question: { title: RandomData.random_sentence,
-        body: RandomData.random_paragraph }
+      post :create, question: {
+        title: RandomData.random_sentence,
+        body: RandomData.random_paragraph,
+        resolved: false}
       expect(assigns(:question)).to eq Question.last
     end
 
     it "redirects to the new question" do
-      post :create, question: { title: RandomData.random_sentence,
-        body: RandomData.random_paragraph }
+      post :create, question: {
+        title: RandomData.random_sentence,
+        body: RandomData.random_paragraph,
+        resolved: false}
       expect(response).to redirect_to Question.last
     end
 
@@ -106,20 +112,25 @@ RSpec.describe QuestionsController, type: :controller do
      it "updates question with expected attributes" do
        new_title = RandomData.random_sentence
        new_body = RandomData.random_paragraph
+       new_status = true
 
-       put :update, id: my_question.id, question: {title: new_title, body: new_body}
+       put :update, id: my_question.id, question: { title: new_title,
+         body: new_body, resolved: new_status }
        # Check question updated without changing question ID
        updated_question = assigns(:question)
        expect(updated_question.id).to eq my_question.id
        expect(updated_question.title).to eq new_title
        expect(updated_question.body).to eq new_body
+       expect(updated_question.resolved).to eq new_status
      end
 
      it "redirects to the updated question" do
        new_title = RandomData.random_sentence
        new_body = RandomData.random_paragraph
+       new_status = true
 
-       put :update, id: my_question.id, question: {title: new_title, body: new_body}
+       put :update, id: my_question.id, question: { title: new_title,
+         body: new_body, resolved: new_status}
        expect(response).to redirect_to my_question
      end
    end
@@ -139,5 +150,4 @@ RSpec.describe QuestionsController, type: :controller do
        expect(response).to redirect_to questions_path
      end
    end
-
 end
