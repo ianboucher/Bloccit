@@ -11,7 +11,8 @@
   </div>
 
   <div class="col-md-8">
-    <%= form_for @post do |f| %>
+    <!-- form_for can take an array of args to account for nested objexts -->
+    <%= form_for [@topic, @post] do |f| %>
       <div class="form-group">
         <!--f.label is provided by the form_for helper, which yields a form builder
         object and creates the attributes and associated HTML tags-->

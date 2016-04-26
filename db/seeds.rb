@@ -1,11 +1,22 @@
 require 'random_data'
 
+# Create topics
+15.times do
+  Topic.create!(
+  name:        RandomData.random_sentence,
+  description: RandomData.random_paragraph
+  )
+end
+
+topics = Topic.all
+
 # Create Posts
 50.times do
   # Create is called with a bang! which in this case instruct the method to raise
   # an error if there's a problem with the data we're inputting. Without the bang,
   # it could fail without warning.
   Post.create!(
+    topic: topics.sample,
     title: RandomData.random_sentence,
     body:  RandomData.random_paragraph
   )
@@ -70,6 +81,7 @@ Advertisement.find_or_create_by!(
 advertisements = Advertisement.all
 
 puts "Seed finished"
+puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
 puts "#{Question.count} questions created"

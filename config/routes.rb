@@ -1,12 +1,19 @@
 Rails.application.routes.draw do
 
   # The 'resources' method instructs Rails to create routes for CRUD actions,
-  # replacing the 'get resource/action' sytax for each route.
-  resources :posts
+  # replacing the 'get resource/action' syntax for each route.
+
+  # We pass 'resources :posts' to the 'resources :topics' block. This nests the
+  # 'posts' routes under the topic route. Index is omitted as posts do not have
+  # separeate index and are shown under their parent topis instead.
+  resources :topics do
+    resources :posts, except: [:index]
+  end
+
+  resources :questions
 
   resources :advertisements
 
-  resources :questions
   # The following route specication allows users to vist /about etc instead of
   # welcome/about etc
   get 'about' => 'welcome#about'

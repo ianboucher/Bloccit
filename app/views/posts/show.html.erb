@@ -6,13 +6,13 @@
    </div>
    <div class="col-md-4">
      <!-- As with the social btn, link_to is used to add a link to a button, but
-      in this case edit_post_path is used to link to the 'edit' page for that
-      post i.e /posts/@post.id/edit-->
-     <%= link_to "Edit", edit_post_path(@post), class: 'btn btn-success' %>
+      in this case edit_topic_post_path takes 2 args (a topic & post) and genrates
+      a link to the 'edit' page for that post i.e /topics/topic.id/posts/post.id/edit-->
+     <%= link_to "Edit Post", edit_topic_post_path(@post.topic, @post), class: 'btn btn-success' %>
      <!--There is no helper method listed in the routes for 'post DELETE' so the
      HTTP verb 'delete' is requred alongside 'method:'. The confimation message
      is then specified via the 'data' hash-->
-     <%= link_to "Delete Post", @post, method: :delete, class: 'btn btn-danger',
+     <%= link_to "Delete Post", [@post.topic, @post], method: :delete, class: 'btn btn-danger',
         data: { confirm: "Are you sure you want to delete this post?" } %>
    </div>
  </div>
