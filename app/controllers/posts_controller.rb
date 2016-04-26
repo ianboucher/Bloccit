@@ -30,6 +30,8 @@ class PostsController < ApplicationController
   end
 
   def new
+    # Not sure what the purpose of finding the topic is here. It doesn't appear
+    # to be used in this context.
     @topic = Topic.find(params[:topic_id])
     @post = Post.new
   end

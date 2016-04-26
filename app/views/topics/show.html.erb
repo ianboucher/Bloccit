@@ -29,11 +29,30 @@
          </div>
        </div>
      <% end %>
+
+     <% @topic.sponsored_posts.each do |sponsored_post| %>
+       <div class="media">
+         <div class="media-body">
+           <h4 class="media-heading">
+             <!--The helper takes a topic AND post and generates a path to the
+             posts show view  -->
+             <%= link_to sponsored_post.title, topic_sponsored_post_path(@topic, sponsored_post) %>
+           </h4>
+           <!-- Add submission and comment details for each post in show view -->
+           <small>
+             submitted <%= time_ago_in_words(sponsored_post.created_at) %> ago <br>
+           </small>
+         </div>
+       </div>
+     <% end %>
+
    </div>
    <!--Provide a link to create a new post associated with current topic-->
    <div class="col-md-4">
      <!-- new_topic_post_path is used to reflect the nexted link to the 'edit' page -->
      <%= link_to "New Post", new_topic_post_path(@topic), class: 'btn btn-success' %>
+     <%= link_to "New Sponsored Post", new_topic_sponsored_post_path(@topic),
+        class: 'btn btn-success' %>
    </div>
 
  </div>

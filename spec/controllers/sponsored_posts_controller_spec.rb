@@ -117,7 +117,7 @@ RSpec.describe SponsoredPostsController, type: :controller do
        new_price = RandomData.random_number
 
        put :update, topic_id: my_topic.id, id: my_sponsored_post.id,
-         sponsored_post: {title: new_title, body: new_body, price: new_price}
+         sponsored_post: { title: new_title, body: new_body, price: new_price }
        # Check sponsored_post updated without changing sponsored_post ID
        updated_sponsored_post = assigns(:sponsored_post)
        expect(updated_sponsored_post.id).to eq my_sponsored_post.id
