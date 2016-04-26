@@ -38,7 +38,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "POST create" do
-
+    # Note 'post' refers to the HTTP verb
     it "increases the question number by 1" do
       expect{post :create, question: {
         title: RandomData.random_sentence,

@@ -1,8 +1,8 @@
-<h1>New Post</h1>
+<h1>New Sponsored Post</h1>
 
 <div class="row">
   <div class="col-md-4">
-    <p>Guidelines for posts</p>
+    <p>Guidelines for sponsored posts</p>
     <ul>
       <li>Make sure it rhymes.</li>
       <li>Don't use the letter 'A'.</li>
@@ -12,19 +12,29 @@
 
   <div class="col-md-8">
     <!-- form_for can take an array of args to account for nested objexts -->
-    <%= form_for [@topic, @post] do |f| %>
+    <%= form_for [@topic, @sponsored_post] do |f| %>
       <div class="form-group">
         <!--f.label is provided by the form_for helper, which yields a form builder
         object and creates the attributes and associated HTML tags-->
         <%= f.label :title %>
         <!--f.text_field is another method that FormHelper provides an <input> tag
         of type 'text'-->
-        <%= f.text_field :title, class: 'form-control', placeholder: "Enter post title" %>
+        <%= f.text_field :title, class: 'form-control',
+          placeholder: "Enter post title" %>
       </div>
+
       <div class="form-group">
         <%= f.label :body %>
-        <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter post here" %>
+        <%= f.text_area :body, rows: 8, class: 'form-control',
+          placeholder: "Enter post here" %>
       </div>
+
+      <div class="form-group">
+        <%= f.label :price  %>
+        <%= f.number_field :price, class: 'special_input',
+          placeholder: "Enter: $5.00 - $15.00" %>
+      </div>
+
       <div class="form-group">
         <!--Again, f.submit is provied by form_for and provides an <input> tag of
         of type 'submit'-->
