@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # separeate index and are shown under their parent topis instead.
   resources :topics do
     resources :posts, except: [:index]
+    resources :sponsored_posts, except: [:index]
   end
 
   resources :questions

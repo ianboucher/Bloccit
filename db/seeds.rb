@@ -23,6 +23,7 @@ topics = Topic.all
 end
 
 Post.find_or_create_by!(
+  topic: topics.sample,
   title: "Ian's Example Post",
   body: "This is an example post added to check the database"
   )
@@ -43,6 +44,29 @@ Comment.find_or_create_by!(
   body: "Example comment created by Ian")
 
 # Create questions
+
+20.times do
+  # Create is called with a bang! which in this case instruct the method to raise
+  # an error if there's a problem with the data we're inputting. Without the bang,
+  # it could fail without warning.
+  SponsoredPost.create!(
+    topic: topics.sample,
+    title: RandomData.random_sentence,
+    body:  RandomData.random_paragraph,
+    price: RandomData.random_number
+  )
+end
+
+SponsoredPost.find_or_create_by!(
+  topic: topics.sample,
+  title: "Ian's Example Post",
+  body: "This is an example post added to check the database",
+  price: 10
+  )
+
+sponsored_posts = SponsoredPost.all
+
+posts = Post.all
 
 20.times do
 
@@ -84,5 +108,6 @@ puts "Seed finished"
 puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
+puts "#{SponsoredPost.count} sponsored posts created"
 puts "#{Question.count} questions created"
 puts "#{Advertisement.count} advertisements created"
