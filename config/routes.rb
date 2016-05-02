@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     resources :sponsored_posts, except: [:index]
   end
 
+  # The 'only' hash key prevents Rails from creating unecessary routes
+  resources :users, only: [:new, :create]
+
   resources :questions
 
   resources :advertisements
