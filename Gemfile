@@ -17,7 +17,7 @@ gem 'quiet_assets'
 gem 'pry-rails'
 
 group :production do
-  gem 'pg'
+  gem 'pg', '~> 0.18.4'
   gem 'rails_12factor'
 end
 # Use sqlite3 as the database for Active Record
