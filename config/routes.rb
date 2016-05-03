@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   # The 'only' hash key prevents Rails from creating unecessary routes
   resources :users, only: [:new, :create]
 
+  resources :sessions, only: [:new, :create, :destroy]
+
   resources :questions
 
   resources :advertisements

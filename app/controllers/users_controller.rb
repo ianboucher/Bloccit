@@ -13,10 +13,11 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:notice] = "Welcome to Bloccit #{@user.name}!"
-      render :index
+      create_session(@user) # What would be the test to ensure new users were signed in?
+      redirect_to root_path # Why is a refresh required to display the 'home' page properly?
     else
       flash[:alert] = "There was an error creating your account. Please try again"
-      redirect_to root_path # Why is a refresh required to display the 'home' page properly?
+      render :new
     end
   end
 
