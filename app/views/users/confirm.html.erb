@@ -5,19 +5,22 @@
 <div class="row">
   <div class="col-md-8">
     <ul>
-      <li><%= "Name: #{params[:user][:name]}" %></li>
-      <li><%= "Email: #{params[:user][:email]}" %></li>
+      <li>Name: <%= @user.name %></li>
+      <li>Email: <%= @user.email %></li>
     </ul>
   </div>
 </div>
 
-# I cannot seem to make the buttons display side-by-side
+<!-- Obviously there are changes here, but I still can't see why the buttons
+wouldn't display side-by-side previously. Also, what does 'button_to' allow us
+to do that 'link_to' doesn't? -->
 <div class="row">
-  <div class="col-md-4">
-    <%= button_to "Yes", {controller: "users", action: "create", params: params},
+  <div class="col-md-4", style="width: 4em">
+    <%= button_to "Yes", { controller: "users", action: "create", params: params },
       class: 'btn btn-success' %>
   </div>
-    <div class="col-md-4">
-    <%= link_to "No", new_user_path, class: 'btn btn-danger' %>
+  <div class="col-md-4">
+    <%= button_to "Nope", { controller: "users", action: "new" }, method: 'get',
+      class: 'btn btn-failure' %>
   </div>
 </div>
