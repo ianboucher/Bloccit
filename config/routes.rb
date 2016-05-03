@@ -18,13 +18,15 @@ Rails.application.routes.draw do
 
   resources :advertisements
 
-  # The following route specication allows users to vist /about etc instead of
-  # welcome/about etc
+  # The following GET route specications allows users to vist /about etc instead
+  # of welcome/about etc
   get 'about' => 'welcome#about'
 
   get 'contact' => 'welcome#contact'
 
   get 'faq' => 'welcome#faq'
+
+  post 'users/confirm' => 'users#confirm'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # callback { self.email = email.downcase } is triggered by the first callback.
 
   before_save { self.email = email.downcase }
-  before_save { self.name = name.split.map(&:capitalize).join(' ') unless name.nil? }
+  before_save { self.name = name.split(/(?=[A-Z])|(\s)/).map(&:capitalize).join unless name.nil? }
 
   validates :name, length: { minimum: 1, maxiumum: 100 }, presence: true
   # 1st password validation executes if password_digest is nil - i.e. if a password

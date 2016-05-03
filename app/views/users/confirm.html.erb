@@ -1,0 +1,23 @@
+<h1>Sign Up Confirmation</h1>
+
+<h4>Are you happy the following information is correct?</h4>
+
+<div class="row">
+  <div class="col-md-8">
+    <ul>
+      <li><%= "Name: #{params[:user][:name]}" %></li>
+      <li><%= "Email: #{params[:user][:email]}" %></li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-4">
+    <%= button_to "Yes", {controller: "users", action: "create", params: params},
+      class: 'btn btn-success' %>
+  </div>
+    <div class="col-md-4">
+    <%= link_to "No", new_user_path, class: 'btn btn-danger' %>
+  </div>
+</div>

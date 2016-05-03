@@ -10,11 +10,17 @@
 <body>
     <div class = "container">
       <ul class = "nav nav-tabs">
+        
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "Topics", topics_path %></li>
         <li><%= link_to "About", about_path %></li>
         <li><%= link_to "FAQ", faq_path %></li>
         <li><%= link_to "Contact", contact_path %></li>
+
+        <div class = "pull-right user-info">
+          <%= link_to "Sign Up", new_user_path %>
+        </div>
+
       </ul>
 
       <%= link_to "Facebook", "https://www.facebook.com/reddit", class: "social-btn" %>
