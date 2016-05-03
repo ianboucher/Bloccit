@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       render :index
     else
       flash[:alert] = "There was an error creating your account. Please try again"
-      redirect_to root_path
+      redirect_to root_path # Why is a refresh required to display the 'home' page properly?
     end
   end
 
