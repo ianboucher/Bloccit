@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
 
+  has_many :posts
+
   # we register an inline callback directly after the before_save callback. The
   # callback { self.email = email.downcase } is triggered by the first callback.
-
   before_save { self.email = email.downcase }
   before_save { self.name = name.split(/(?=[A-Z])|(\s)/).map(&:capitalize).join unless name.nil? }
 

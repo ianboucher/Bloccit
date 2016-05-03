@@ -1,5 +1,22 @@
 require 'random_data'
 
+# Creat users
+5.times do
+  User.create!(
+  name:     RandomData.random_name,
+  email:    RandomData.random_email,
+  password: RandomData.random_sentence,
+  )
+end
+
+users = User.all
+
+user = users.first
+user.update_attributes!(
+  email: 'i.a.boucher@gmail.com',
+  password: 'password'
+)
+
 # Create topics
 15.times do
   Topic.create!(
@@ -17,6 +34,7 @@ topics = Topic.all
   # it could fail without warning.
   Post.create!(
     topic: topics.sample,
+    user:  users.sample,
     title: RandomData.random_sentence,
     body:  RandomData.random_paragraph
   )
@@ -24,6 +42,7 @@ end
 
 Post.find_or_create_by!(
   topic: topics.sample,
+  user: users.sample,
   title: "Ian's Example Post",
   body: "This is an example post added to check the database"
   )

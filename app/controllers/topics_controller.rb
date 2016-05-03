@@ -5,12 +5,8 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = Topic.new
-    # The params hash contains all parameters passed to the applications controller
-    # (application_controller.rb) from a HTTP action (only POST?) via user forms
-    @topic.name = params[:topic][:name]
-    @topic.description = params[:topic][:description]
-    @topic.public = params[:topic][:public]
+
+    @topic = Topic.new(topic_params)
 
     if @topic.save
       flash[:notice] = "Topic was saved successfully."
@@ -37,9 +33,7 @@ class TopicsController < ApplicationController
     # Update action is similar to create action, except an existing object is
     # found first.
     @topic = Topic.find(params[:id])
-    @topic.name = params[:topic][:name]
-    @topic.description = params[:topic][:description]
-    @topic.public = params[:topic][:public]
+    @topic.assign_attributes(topic_params)
 
     if @topic.save
       flash[:notice] = "Topic was saved successfully."
@@ -61,4 +55,12 @@ class TopicsController < ApplicationController
       render :show
     end
   end
+
+  private
+
+  def topic_params
+    # Specify params to be whitelisted for setting via mass assignment
+    params.require(:topic).permit(:name, :description, :public)
+  end
+
 end

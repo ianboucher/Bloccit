@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+include SessionsHelper # Allows use of 'current_user' helper method
+
 RSpec.describe PostsController, type: :controller do
 
   # As posts are nested under topics, we create a parent topic and then create a
@@ -7,13 +9,87 @@ RSpec.describe PostsController, type: :controller do
   let(:my_topic) { Topic.create!(name: RandomData.random_sentence,
     description: RandomData.random_paragraph) }
 
+  let(:my_user) {User.create!(name: "Bloccit User", email: "user@bloccit.com",
+      password: "password") }
+
   let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence,
-    body: RandomData.random_paragraph) }
+    body: RandomData.random_paragraph, user: my_user) }
 
 # Index tests were removed as posts are nested under their parent topics and so
 # will be displayed on the show view of their topic.
 
+  # Contexts group tests based on the state of an object
+context "guest user" do
+
+  # Check that guest users are able to view posts
+  describe "GET show" do
+    it "returns http success" do
+      get :show, topic_id: my_topic.id, id: my_post.id
+      expect(response).to have_http_status(:success)
+    end
+
+    it "renders the #show view" do
+      get :show, topic_id: my_topic.id, id: my_post.id
+      expect(response).to render_template :show
+    end
+
+    it "assigns my_post to @post" do
+      get :show, topic_id: my_topic.id, id: my_post.id
+      expect(assigns(:post)).to eq(my_post)
+    end
+  end
+
+  # Check that guest users are not allowed to perform CRUD actions. We expect
+  # that guests will be redirected if they attempt a CRUD action.
+  describe "GET new" do
+    it "returns http redirect" do
+      get :new, topic_id: my_topic.id
+      expect(response).to redirect_to(new_session_path)
+    end
+  end
+
+  describe "POST create" do
+    it "returns http redirect" do
+      post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence,
+        body: RandomData.random_paragraph}
+      expect(response).to redirect_to(new_session_path)
+    end
+  end
+
+  describe "GET edit" do
+    it "returns http redirect" do
+      get :edit, topic_id: my_topic.id, id: my_post.id
+      expect(response).to redirect_to(new_session_path)
+    end
+  end
+
+  describe "PUT update" do
+    it "returns http redirect" do
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
+
+      put :update, topic_id: my_topic.id, id: my_post.id, post: {title: new_title,
+        body: new_body}
+      expect(response).to redirect_to(new_session_path)
+    end
+  end
+
+  describe "DELETE destroy" do
+    it "returns http redirect" do
+      delete :destroy, topic_id: my_topic.id, id: my_post.id
+      expect(response).to have_http_status(:redirect)
+    end
+  end
+end
+
+context "signed-in user" do
+
+  before do
+    create_session(my_user)
+  end
+
   describe "GET new " do
+
     it "returns http success" do
       # get :new request looks for topic_id of the parent topic from params
       get :new, topic_id: my_topic.id
@@ -79,58 +155,58 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe "GET edit" do
-     it "returns http success" do
-       # get :edit request includes the id of the parent topic.
-       get :edit, topic_id: my_topic.id, id: my_post.id
-       expect(response).to have_http_status(:success)
-     end
+    it "returns http success" do
+     # get :edit request includes the id of the parent topic.
+     get :edit, topic_id: my_topic.id, id: my_post.id
+     expect(response).to have_http_status(:success)
+    end
 
-     it "renders the #edit view" do
-       get :edit, topic_id: my_topic.id, id: my_post.id
-       expect(response).to render_template :edit
-     end
+    it "renders the #edit view" do
+     get :edit, topic_id: my_topic.id, id: my_post.id
+     expect(response).to render_template :edit
+    end
 
-     # Check that edit assigns the correct post to be updated to @post
-     it "assigns post to be updated to @post" do
-       get :edit, topic_id: my_topic.id, id: my_post.id
+    # Check that edit assigns the correct post to be updated to @post
+    it "assigns post to be updated to @post" do
+     get :edit, topic_id: my_topic.id, id: my_post.id
 
-       post_instance = assigns(:post)
+     post_instance = assigns(:post)
 
-       expect(post_instance.id).to eq my_post.id
-       expect(post_instance.title).to eq my_post.title
-       expect(post_instance.body).to eq my_post.body
-     end
-   end
+     expect(post_instance.id).to eq my_post.id
+     expect(post_instance.title).to eq my_post.title
+     expect(post_instance.body).to eq my_post.body
+    end
+  end
 
-   describe "PUT update" do
-     # PUT & PATCH are the HTTP verbs associated with the update action.
-     it "updates post with expected attributes" do
-       new_title = RandomData.random_sentence
-       new_body = RandomData.random_paragraph
+  describe "PUT update" do
+  # PUT & PATCH are the HTTP verbs associated with the update action.
+    it "updates post with expected attributes" do
+     new_title = RandomData.random_sentence
+     new_body = RandomData.random_paragraph
 
-       put :update, topic_id: my_topic.id, id: my_post.id,
-         post: {title: new_title, body: new_body}
-       # Check post updated without changing post ID
-       updated_post = assigns(:post)
-       expect(updated_post.id).to eq my_post.id
-       expect(updated_post.title).to eq new_title
-       expect(updated_post.body).to eq new_body
-     end
+     put :update, topic_id: my_topic.id, id: my_post.id,
+       post: {title: new_title, body: new_body}
+     # Check post updated without changing post ID
+     updated_post = assigns(:post)
+     expect(updated_post.id).to eq my_post.id
+     expect(updated_post.title).to eq new_title
+     expect(updated_post.body).to eq new_body
+    end
 
-     it "redirects to the updated post" do
-       new_title = RandomData.random_sentence
-       new_body = RandomData.random_paragraph
+    it "redirects to the updated post" do
+     new_title = RandomData.random_sentence
+     new_body = RandomData.random_paragraph
 
-       put :update, topic_id: my_topic.id, id: my_post.id,
-         post: {title: new_title, body: new_body}
-       # Rails router can take an array of objects to build a route
-       expect(response).to redirect_to [my_topic, my_post]
-     end
-   end
+     put :update, topic_id: my_topic.id, id: my_post.id,
+       post: {title: new_title, body: new_body}
+     # Rails router can take an array of objects to build a route
+     expect(response).to redirect_to [my_topic, my_post]
+    end
+  end
 
-   describe "DELETE destroy" do
+  describe "DELETE destroy" do
 
-     it "deletes the post" do
+    it "deletes the post" do
        delete :destroy, topic_id: my_topic.id, id: my_post.id
        # After destroy is called on post ID#, look for the post with the same ID
        # and check that the returned array has size = 0.
@@ -142,5 +218,6 @@ RSpec.describe PostsController, type: :controller do
        delete :destroy, topic_id: my_topic.id, id: my_post.id
        expect(response).to redirect_to my_topic
      end
-   end
+    end
+  end
 end
