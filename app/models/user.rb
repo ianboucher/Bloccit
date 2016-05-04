@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   # callback { self.email = email.downcase } is triggered by the first callback.
   before_save { self.email = email.downcase }
   before_save { self.name = name.split(/(?=[A-Z])|(\s)/).map(&:capitalize).join unless name.nil? }
+  before_save { self.role ||= :member } # set role to member if not specified
 
   validates :name, length: { minimum: 1, maxiumum: 100 }, presence: true
   # 1st password validation executes if password_digest is nil - i.e. if a password
@@ -25,4 +26,8 @@ class User < ActiveRecord::Base
   # password. This mechanism requires you to have a password_digest attribute.
   has_secure_password
 
+  # We use enum to allow values (strings) to map to integers, which allows greater
+  # control over the roles that can be assigned to a user and provides access to
+  # helpful methods
+  enum role: [:member, :admin]
 end

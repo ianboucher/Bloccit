@@ -11,9 +11,18 @@ end
 
 users = User.all
 
-user = users.first
-user.update_attributes!(
-  email: 'i.a.boucher@gmail.com',
+# Create an admin user
+admin = User.create!(
+  name:     'Admin User',
+  email:    'admin@bloccit.com',
+  password: 'password',
+  role:     'admin'
+)
+
+# Create a member user (should be set by default)
+admin = User.create!(
+  name:     'Member User',
+  email:    'member@bloccit.com',
   password: 'password'
 )
 
