@@ -29,5 +29,5 @@ class User < ActiveRecord::Base
   # We use enum to allow values (strings) to map to integers, which allows greater
   # control over the roles that can be assigned to a user and provides access to
   # helpful methods
-  enum role: [:member, :admin]
+  enum role: [:member, :moderator, :admin]
 end

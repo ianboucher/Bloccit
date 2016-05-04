@@ -11,16 +11,14 @@
   </div>
 </div>
 
-<!-- Obviously there are changes here, but I still can't see why the buttons
-wouldn't display side-by-side previously. Also, what does 'button_to' allow us
-to do that 'link_to' doesn't? -->
+<!-- 'button_to' initiates a controller POST action by default. link_to initiates
+a GET action by default. Here button_to was replaced by link_to for the "yes"
+button due to strange styling behaviour. This necessitated the specification of
+the 'post' method. The params then needed to be passed to the create method via
+the resource/path helper -->
 <div class="row">
-  <div class="col-md-4", style="width: 4em">
-    <%= button_to "Yes", { controller: "users", action: "create", params: params },
-      class: 'btn btn-success' %>
-  </div>
-  <div class="col-md-4">
-    <%= button_to "Nope", { controller: "users", action: "new" }, method: 'get',
-      class: 'btn btn-failure' %>
+  <div class = "col-md-4">
+    <%= link_to "Yes", users_path(params: params), method: :post, class: 'btn btn-success' %>
+    <%= link_to "Nope", new_user_path, class: 'btn btn-danger' %>
   </div>
 </div>

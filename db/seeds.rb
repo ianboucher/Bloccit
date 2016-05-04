@@ -9,8 +9,6 @@ require 'random_data'
   )
 end
 
-users = User.all
-
 # Create an admin user
 admin = User.create!(
   name:     'Admin User',
@@ -19,12 +17,22 @@ admin = User.create!(
   role:     'admin'
 )
 
+# Create a moderator user
+moderator = User.create!(
+  name: 'Moderator User',
+  email: 'moderator@bloccit.com',
+  password: 'password',
+  role: 'moderator'
+)
+
 # Create a member user (should be set by default)
-admin = User.create!(
+member = User.create!(
   name:     'Member User',
   email:    'member@bloccit.com',
   password: 'password'
 )
+
+users = User.all
 
 # Create topics
 15.times do
@@ -133,6 +141,7 @@ Advertisement.find_or_create_by!(
 advertisements = Advertisement.all
 
 puts "Seed finished"
+puts "#{User.count} users created"
 puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
