@@ -34,5 +34,11 @@
     <% end %>
   </div>
 
+  <!-- render the label form partial and pass it the form object 'f' in the
+  locals params hash -->
+  <div class="form-group">
+    <%= render partial: 'labels/form', locals: {f: f, labels: @topic.labels } %>
+  </div>
+
   <%= f.submit "Save", class: 'btn btn-success' %>
 <% end %>

@@ -27,6 +27,12 @@
         placeholder: "Enter post here" %>
     <% end %>
 
+    <!-- render the label form partial and pass it the form object 'f' in the
+    locals params hash, along with the topic and the labels corresponding to the current post -->
+    <div class="form-group">
+      <%= render partial: 'labels/form', locals: {f: f, topic: @topic, labels: @post.labels } %>
+    </div>
+
 
     <div class="form-group">
       <%= f.submit "Save", class: 'btn btn-success' %>

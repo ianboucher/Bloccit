@@ -1,0 +1,10 @@
+<div class="form-group">
+    <%= f.label :labels %>
+ <!-- allow user to set multiple labels at once. '#map' iterates over array of
+  label objects ('labels') and creates a new array where each value is a label
+  name. '#join' is then used to create a string of labels. -->
+    <%= f.text_field :labels,
+                     class: 'form-control',
+                     placeholder: "Enter labels (separated by commas)",
+                     value: labels.map(&:name).join(', ') %>
+</div>

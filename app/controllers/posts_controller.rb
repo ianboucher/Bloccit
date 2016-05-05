@@ -13,6 +13,7 @@ class PostsController < ApplicationController
     # provides a way to pass temporary values between actions. Any value placed
     # in flash will be available in the next action and then deleted.
     if @post.save
+      @post.labels = Label.update_labels(params[:post][:labels])
       flash[:notice] = "Post was saved successfully."
       # Rails router can take an array of objects to build a route
       redirect_to [@topic, @post]
@@ -45,6 +46,7 @@ class PostsController < ApplicationController
     @post.assign_attributes(post_params)
 
     if @post.save
+      @post.labels = Label.update_labels(params[:post][:labels])
       flash[:notice] = "Post was saved successfully."
       redirect_to [@post.topic, @post]
     else

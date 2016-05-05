@@ -11,7 +11,11 @@
  <div class="row">
 
    <div class="col-md-8">
-     <p class="lead"><%= @topic.description %></p>
+     <p class="lead">
+       <%= render partial: "labels/list", locals: { labels: @topic.labels } %>
+       <br />
+       <%= @topic.description %>
+     </p>
      <!--Iterate over and display link to posts belonging to topic. Instance
      variables created in a contrller method are available in corresponding view -->
      <% @topic.posts.each do |post| %>
@@ -21,6 +25,7 @@
              <!--The helper takes a topic AND post and generates a path to the
              posts show view  -->
              <%= link_to post.title, topic_post_path(@topic, post) %>
+             <%= render partial: "labels/list", locals: { labels: post.labels } %>
            </h4>
            <!-- Add submission and comment details for each post in show view -->
            <small>
@@ -48,7 +53,7 @@
      <% end %>
 
    </div>
-   
+
    <% if current_user %>
    <!--Provide a link for signed-in users to create a new post associated with current topic-->
      <div class="col-md-4">
