@@ -14,22 +14,11 @@
      <p class="lead"><%= @topic.description %></p>
      <!--Iterate over and display link to posts belonging to topic. Instance
      variables created in a contrller method are available in corresponding view -->
-     <% @topic.posts.each do |post| %>
-       <div class="media">
-         <div class="media-body">
-           <h4 class="media-heading">
-             <!--The helper takes a topic AND post and generates a path to the
-             posts show view  -->
-             <%= link_to post.title, topic_post_path(@topic, post) %>
-           </h4>
-           <!-- Add submission and comment details for each post in show view -->
-           <small>
-             submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
-             <%= post.comments.count %> Comments
-           </small>
-         </div>
-       </div>
-     <% end %>
+     <div>
+       <!-- The 'render' syntax relies on Rails conventions to find the '_post'
+       partial, loop through the posts for the given topic and display them. -->
+       <%= render @topic.posts %>
+     </div>
 
      <% @topic.sponsored_posts.each do |sponsored_post| %>
        <div class="media">
@@ -48,7 +37,7 @@
      <% end %>
 
    </div>
-   
+
    <% if current_user %>
    <!--Provide a link for signed-in users to create a new post associated with current topic-->
      <div class="col-md-4">

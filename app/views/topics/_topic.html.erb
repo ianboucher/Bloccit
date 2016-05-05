@@ -1,0 +1,13 @@
+<div class="media">
+  <div class="media-body">
+    <h4 class="media-heading">
+      <!-- Rails allows us to replace the 2nd argument, 'topic_path(topic.id)'
+      method with 'topic'. Rails will then detect the object, parse its id and
+      create the path -->
+      <%= link_to topic.name, topic %>
+    </h4>
+    <small>
+      <%= topic.description %>
+    </small>
+  </div>
+</div>
