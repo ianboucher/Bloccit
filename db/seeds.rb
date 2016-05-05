@@ -20,7 +20,7 @@ admin = User.create!(
 )
 
 # Create a member user (should be set by default)
-admin = User.create!(
+member = User.create!(
   name:     'Member User',
   email:    'member@bloccit.com',
   password: 'password'
@@ -62,12 +62,14 @@ posts = Post.all
 
 100.times do
   Comment.create!(
+    user: users.sample,
     post: posts.sample,
     body: RandomData.random_paragraph
   )
 end
 
 Comment.find_or_create_by!(
+  user: users.sample,
   post: posts.find_by(title: "Ian's Example Post"),
   body: "Example comment created by Ian")
 
@@ -133,6 +135,7 @@ Advertisement.find_or_create_by!(
 advertisements = Advertisement.all
 
 puts "Seed finished"
+puts "#{User.count} users created"
 puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"

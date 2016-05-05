@@ -11,6 +11,16 @@ Rails.application.routes.draw do
     resources :sponsored_posts, except: [:index]
   end
 
+  # We nest comments solely under posts as we want to avoid deeply nested routes.
+  # We should aim to nest resources only 1 level deep. 'only: []' is specified
+  # because we don't want to create any routes specific to posts - these are
+  # handled above under topics.
+  resources :posts, only: [] do
+    # comments will be displayed via the posts show view and will not be viewed
+    # individually, so don't need [:index, ,:show, :new, :edit] routes
+    resources :comments, only: [:create, :destroy]
+  end
+
   # The 'only' hash key prevents Rails from creating unecessary routes
   resources :users, only: [:new, :create]
 
