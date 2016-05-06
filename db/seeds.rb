@@ -1,5 +1,10 @@
 require 'random_data'
 
+User.destroy_all
+Topic.destroy_all
+Post.destroy_all
+Comment.destroy_all
+
 # Creat users
 5.times do
   User.create!(
@@ -36,6 +41,14 @@ end
 
 topics = Topic.all
 
+100.times do
+  Comment.create!(
+    user: users.sample,
+    commentable: topics.sample,
+    body: RandomData.random_paragraph
+  )
+end
+
 # Create Posts
 50.times do
   # Create is called with a bang! which in this case instruct the method to raise
@@ -69,15 +82,15 @@ posts = Post.all
 100.times do
   Comment.create!(
     user: users.sample,
-    post: posts.sample,
+    commentable: posts.sample,
     body: RandomData.random_paragraph
   )
 end
 
-Comment.find_or_create_by!(
-  user: users.sample,
-  post: posts.find_by(title: "Ian's Example Post"),
-  body: "Example comment created by Ian")
+# Comment.find_or_create_by!(
+#   user: users.sample,
+#   post: posts.find_by(title: "Ian's Example Post"),
+#   body: "Example comment created by Ian")
 
 # Create questions
 

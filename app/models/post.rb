@@ -3,7 +3,7 @@ class Post < ActiveRecord::Base
   belongs_to :user
   # 'dependant: :destroy' ensures that any dependants (i.e. comments) are
   # when the post is destroyed
-  has_many :comments, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
   has_many :votes, dependent: :destroy
   # define relationship to Labeling using the labelable interface
   has_many :labelings, as: :labelable

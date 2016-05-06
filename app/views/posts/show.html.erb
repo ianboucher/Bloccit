@@ -53,7 +53,7 @@
        <%= render @post.comments %>
      </div>
      <% if current_user %>
-       <%= render 'comments/form', comment: Comment.new, post: @post %>
+       <%= render 'comments/form', comment: Comment.new, commentable: @post %>
      <% end %>
    </div>
  </div>

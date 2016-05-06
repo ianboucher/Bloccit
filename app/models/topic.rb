@@ -1,6 +1,7 @@
 class Topic < ActiveRecord::Base
   
   has_many :posts, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
   has_many :sponsored_posts, dependent: :destroy
   # define relationship to Labeling using the labelable interface
   has_many :labelings, as: :labelable
