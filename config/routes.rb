@@ -19,6 +19,13 @@ Rails.application.routes.draw do
     # comments will be displayed via the posts show view and will not be viewed
     # individually, so don't need [:index, ,:show, :new, :edit] routes
     resources :comments, only: [:create, :destroy]
+    # There are no specific views for votes - we only need to create the routes
+    # for use in the _voter partial. The best option is to do this manually.
+    # Here POST routes are created for URLs eg. posts/:id/up-vote.
+    # The 'as:' key-value pairs specify the method names associated with these
+    # routes, e.g. up_vote_path.
+    post '/up-vote' => 'votes#up_vote', as: :up_vote
+    post '/down-vote' => 'votes#down_vote', as: :down_vote
   end
 
   # The 'only' hash key prevents Rails from creating unecessary routes

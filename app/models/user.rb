@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
 
-  has_many :posts
-  has_many :comments
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :votes, dependent: :destroy
 
   # we register an inline callback directly after the before_save callback. The
   # callback { self.email = email.downcase } is triggered by the first callback.

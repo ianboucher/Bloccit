@@ -20,6 +20,7 @@
      variables created in a contrller method are available in corresponding view -->
      <% @topic.posts.each do |post| %>
        <div class="media">
+         <%= render partial: 'votes/voter', locals: { post: post } %>
          <div class="media-body">
            <h4 class="media-heading">
              <!--The helper takes a topic AND post and generates a path to the

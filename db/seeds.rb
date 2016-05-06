@@ -41,12 +41,18 @@ topics = Topic.all
   # Create is called with a bang! which in this case instruct the method to raise
   # an error if there's a problem with the data we're inputting. Without the bang,
   # it could fail without warning.
-  Post.create!(
+  post = Post.create!(
     topic: topics.sample,
     user:  users.sample,
     title: RandomData.random_sentence,
     body:  RandomData.random_paragraph
   )
+
+  # Modify the age of the posts (to test ranking)
+  post.update_attribute(:created_at, rand(10.minutes .. 1.year).ago)
+
+  # Apply 1 - 5 votes to each post.
+  rand(1..5).times { post.votes.create!(value: [-1, 1].sample, user: users.sample) }
 end
 
 Post.find_or_create_by!(
@@ -139,6 +145,7 @@ puts "#{User.count} users created"
 puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
+puts "#{Vote.count} votes created"
 puts "#{SponsoredPost.count} sponsored posts created"
 puts "#{Question.count} questions created"
 puts "#{Advertisement.count} advertisements created"
