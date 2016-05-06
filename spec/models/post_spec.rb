@@ -88,4 +88,15 @@ RSpec.describe Post, type: :model do
       end
     end
   end
+
+  describe "create_vote" do
+
+    it "sets the post up-vote to 1 upon creation" do
+      expect(post.up_votes).to eq(1)
+    end
+
+    it "associates the first vote with the post creater" do
+      expect(post.votes.first.user).to eq(user)
+    end
+  end
 end
