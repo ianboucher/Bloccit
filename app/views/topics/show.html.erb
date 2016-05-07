@@ -16,8 +16,20 @@
        <br />
        <%= @topic.description %>
      </p>
+     <div>
+       <h3>Topic Comments</h3>
+       <!-- The 'render' syntax relies on Rails conventions to find the '_comment'
+       partial, loop through the comments for the given post and display them -->
+       <%= render partial: 'comments/comment', locals: { commentable: @topic } %>
+     </div>
+     <% if current_user %>
+       <%= render partial: 'comments/form', locals: { commentable: @topic } %>
+     <% end %>
+    </div>
+
      <!--Iterate over and display link to posts belonging to topic. Instance
      variables created in a contrller method are available in corresponding view -->
+     <div class="col-md-4">
      <% @topic.posts.each do |post| %>
        <div class="media">
          <%= render partial: 'votes/voter', locals: { post: post } %>
@@ -36,33 +48,14 @@
          </div>
        </div>
      <% end %>
-
-     <% @topic.sponsored_posts.each do |sponsored_post| %>
-       <div class="media">
-         <div class="media-body">
-           <h4 class="media-heading">
-             <!--The helper takes a topic AND post and generates a path to the
-             posts show view  -->
-             <%= link_to sponsored_post.title, topic_sponsored_post_path(@topic, sponsored_post) %>
-           </h4>
-           <!-- Add submission and comment details for each post in show view -->
-           <small>
-             submitted <%= time_ago_in_words(sponsored_post.created_at) %> ago <br>
-           </small>
-         </div>
-       </div>
-     <% end %>
-
+     </div>
    </div>
-
+   <br />
    <% if current_user %>
    <!--Provide a link for signed-in users to create a new post associated with current topic-->
-     <div class="col-md-4">
+     <div class="col-md-4 pull-right">
        <!-- new_topic_post_path is used to reflect the nexted link to the 'edit' page -->
        <%= link_to "New Post", new_topic_post_path(@topic), class: 'btn btn-success' %>
-       <%= link_to "New Sponsored Post", new_topic_sponsored_post_path(@topic),
-          class: 'btn btn-success' %>
      </div>
    <% end %>
-
  </div>

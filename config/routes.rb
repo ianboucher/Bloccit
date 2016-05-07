@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :topics do
     resources :posts, except: [:index]
     resources :sponsored_posts, except: [:index]
+    resources :comments, only: [:create, :destroy], module: :topics
   end
 
   # We nest comments solely under posts as we want to avoid deeply nested routes.
@@ -18,7 +19,7 @@ Rails.application.routes.draw do
   resources :posts, only: [] do
     # comments will be displayed via the posts show view and will not be viewed
     # individually, so don't need [:index, ,:show, :new, :edit] routes
-    resources :comments, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy], module: :posts
     # There are no specific views for votes - we only need to create the routes
     # for use in the _voter partial. The best option is to do this manually.
     # Here POST routes are created for URLs eg. posts/:id/up-vote.

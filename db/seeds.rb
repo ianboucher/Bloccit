@@ -69,15 +69,15 @@ posts = Post.all
 100.times do
   Comment.create!(
     user: users.sample,
-    post: posts.sample,
+    commentable: posts.sample,
     body: RandomData.random_paragraph
   )
 end
 
-Comment.find_or_create_by!(
-  user: users.sample,
-  post: posts.find_by(title: "Ian's Example Post"),
-  body: "Example comment created by Ian")
+# Comment.find_or_create_by!(
+#   user: users.sample,
+#   post: posts.find_by(title: "Ian's Example Post"),
+#   body: "Example comment created by Ian")
 
 # Create questions
 
