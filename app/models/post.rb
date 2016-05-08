@@ -5,6 +5,7 @@ class Post < ActiveRecord::Base
   # when the post is destroyed
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
+  has_many :favorites, dependent: :destroy
   # define relationship to Labeling using the labelable interface
   has_many :labelings, as: :labelable
   # define relationship to Label through the labelable interface

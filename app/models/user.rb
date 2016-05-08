@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   # we register an inline callback directly after the before_save callback. The
   # callback { self.email = email.downcase } is triggered by the first callback.
@@ -32,4 +33,9 @@ class User < ActiveRecord::Base
   # control over the roles that can be assigned to a user and provides access to
   # helpful methods
   enum role: [:member, :admin]
+
+  def favorite_for(post)
+    # find favorites with post_id matching post. Return either the favorite or nil.
+    favorites.where(post_id: post.id).first
+  end
 end
