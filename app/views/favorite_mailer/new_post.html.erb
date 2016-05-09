@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- Note that we can't access application.html.erb or external CSS from mailer views -->
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>You've created a new post "<%= @post.title %>"</h1>
+    <small>
+      By: <%= @post.user.name %>
+    </small>
+    <p>
+      <%= @post.body %>
+    </p>
+    <p>
+<!-- IMPORTANT: We use 'topic_post_url' because if we used _path we would get a
+relative URL which is useless to a mail recipient. We need an absolute URL -->
+      <%= link_to "View Comment on site", topic_post_url(@post.topic, @post) %>
+          <!-- Note the use of 'anchor:' option which adds custom parameters to
+          our URL -->
+    </p>
+    <p>
+      You will be notified when other users comment on your post.
+    </p>
+  </body>
+</html>

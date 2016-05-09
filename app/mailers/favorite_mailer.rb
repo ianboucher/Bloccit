@@ -17,4 +17,18 @@ class FavoriteMailer < ApplicationMailer
     # mail takes a hash of mail-relevant info (to:, from:, subject: etc.)
     mail(to: user.email, subject: "New comment on #{post.title}")
   end
+
+  def new_post(user, post)
+    # set headers to allow conversational threading
+    headers["In-Reply-To"] = "<post/#{post.id}@dry-falls-64873.example>"
+    headers["Message-ID"] = "<post/#{post.id}@dry-falls-64873.example>"
+
+    # as with controllers, mailers make instance variables available in their
+    # corresponding view.
+    @user = user
+    @post = post
+
+    # mail takes a hash of mail-relevant info (to:, from:, subject: etc.)
+    mail(to: user.email, subject: "You're following your new post #{post.title}")
+  end
 end
