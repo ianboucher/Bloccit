@@ -6,17 +6,10 @@ RSpec.describe PostsController, type: :controller do
 
   # As posts are nested under topics, we create a parent topic and then create a
   # post belonging to that topic.
-  let(:my_topic) { Topic.create!(name: RandomData.random_sentence,
-    description: RandomData.random_paragraph) }
-
-  let(:my_user) {User.create!(name: "Bloccit User", email: "user@bloccit.com",
-      password: "password") }
-
-  let(:other_user) {User.create!(name: "Other User", email: "other@bloccit.com",
-      password: "password") }
-
-  let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence,
-    body: RandomData.random_paragraph, user: my_user) }
+  let(:my_topic) { create(:topic) }
+  let(:my_user) { create(:user) }
+  let(:other_user) { create(:user) }
+  let(:my_post) { create(:post, topic: my_topic, user: my_user) }
 
 # Index tests were removed as posts are nested under their parent topics and so
 # will be displayed on the show view of their topic.

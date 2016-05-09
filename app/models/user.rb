@@ -38,4 +38,9 @@ class User < ActiveRecord::Base
     # find favorites with post_id matching post. Return either the favorite or nil.
     favorites.where(post_id: post.id).first
   end
+
+  def avatar_url(size)
+    gravatar_id = Digest::MD5::hexdigest(self.email).downcase
+    gravatar_url = "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
+  end
 end

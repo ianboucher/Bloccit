@@ -18,9 +18,9 @@ module SessionsHelper
     User.find_by(id: session[:user_id])
   end
 
-  def avatar_url(user)
-    gravatar_id = Digest::MD5::hexdigest(user.email).downcase
-    gravatar_url = "http://gravatar.com/avatar/#{gravatar_id}"
-    image_tag(gravatar_url, alt: user.name, class: "gravatar")
-  end
+  # def avatar_url(user)
+  #   gravatar_id = Digest::MD5::hexdigest(user.email).downcase
+  #   gravatar_url = "http://gravatar.com/avatar/#{gravatar_id}"
+  #   image_tag(gravatar_url, alt: user.name, class: "gravatar")
+  # end
 end
