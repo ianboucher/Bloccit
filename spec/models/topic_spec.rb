@@ -14,7 +14,8 @@ RSpec.describe Topic, type: :model do
 
   # I had to replace the test above because Ruby evaluates 'false' as 'blank',
   # hence, when :public is set to 'false' in subsequent tests, the validation fails.
-  # However, using the test below, results in a warning from Shoulda gem.
+  # However, using the test below, results in a warning from Shoulda gem. Is
+  # there a better solution?
   it { is_expected.to validate_inclusion_of(:public).in_array([true, false])}
 
 
@@ -34,8 +35,10 @@ RSpec.describe Topic, type: :model do
   context "scopes" do
 
     before do
-      @public_topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
-      @private_topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph, public: false)
+      @public_topic = Topic.create!(name: RandomData.random_sentence,
+        description: RandomData.random_paragraph)
+      @private_topic = Topic.create!(name: RandomData.random_sentence,
+        description: RandomData.random_paragraph, public: false)
     end
 
     describe "visible_to(user)" do
@@ -47,6 +50,20 @@ RSpec.describe Topic, type: :model do
 
       it "returns only public topics if user is nil" do
         expect(Topic.visible_to(nil)).to eq([@public_topic])
+      end
+    end
+
+    describe "publicly_viewable" do
+
+      it "returns only public topics" do
+        expect(Topic.publicly_viewable).to eq([@public_topic])
+      end
+    end
+
+    describe "privately_viewable" do
+
+      it "returns only private topics" do
+        expect(Topic.privately_viewable).to eq([@private_topic])
       end
     end
   end

@@ -11,6 +11,8 @@ class Topic < ActiveRecord::Base
   validates :description, length: { minimum: 15 }, presence: true
   validates :public, :inclusion => { :in => [true, false] }
 
-  scope :visible_to, -> (user){ user ? all : where(public: true) }
+  scope :publicly_viewable, -> { where(public: true) }
+  scope :privately_viewable, -> { where(public: false) }
+  scope :visible_to, -> (user){ user ? all : publicly_viewable }
 
 end
