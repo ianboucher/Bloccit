@@ -8,7 +8,7 @@ RSpec.describe VotesController, type: :controller do
   let(:other_user) { create(:user) }
   let(:user_post) { create(:post, topic: my_topic, user: other_user) }
 
-  let(:my_vote) { Vote.create!(value: 1) }
+  let(:my_vote) { create(:vote, value: 1) }
 
   # check that un-signed-in users can't vote
   context "guest" do
