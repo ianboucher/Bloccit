@@ -6,7 +6,9 @@ a comment's ID inside an HTML tag. -->
       <small>
         <%= comment.user.name %> commented <%= time_ago_in_words(comment.created_at) %> ago
         <% if user_is_authorized_for_comment?(comment) %>
-          <%= link_to "Delete", [comment.post, comment], method: :delete %>
+        <!-- remote: :true adds a jQuery listener which enables the form to be
+        submitted without the page refreshing -->
+          <%= link_to "Delete", [comment.post, comment], method: :delete, remote: true %>
         <% end %>
       </small>
       <p><%= comment.body %></p>
