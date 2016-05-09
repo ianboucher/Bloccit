@@ -22,7 +22,7 @@
           <% if current_user %>
           <%= link_to "Facebook", "https://www.facebook.com/reddit", class: "social-btn" %>
 
-            <%= image_tag current_user.avatar_url(48), class: "gravatar" %>
+            <%= image_tag avatar_url(current_user, 48), class: "gravatar" %>
 
             <div class="pull-right">
               <%= link_to current_user.name, user_path(current_user) %> <br/> <%= link_to "Sign Out", session_path(current_user), method: :delete %>

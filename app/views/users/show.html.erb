@@ -2,7 +2,7 @@
    <div class="col-md-8">
      <div class="media">
        <br />
-       <% avatar_url = @user.avatar_url(128) %>
+       <% avatar_url = avatar_url(@user, 128) %>
        <% if avatar_url %>
          <div class="media-left">
            <!-- User Rails helper image_tag to create an <img> -->
