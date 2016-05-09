@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160508075927) do
+ActiveRecord::Schema.define(version: 20160509212118) do
 
   create_table "advertisements", force: :cascade do |t|
     t.string   "title"
@@ -71,11 +71,12 @@ ActiveRecord::Schema.define(version: 20160508075927) do
   create_table "posts", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "topic_id"
     t.integer  "user_id"
     t.float    "rank"
+    t.integer  "comments_count", default: 0
   end
 
   add_index "posts", ["topic_id"], name: "index_posts_on_topic_id"
@@ -112,9 +113,11 @@ ActiveRecord::Schema.define(version: 20160508075927) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "role"
+    t.integer  "posts_count",     default: 0
+    t.integer  "comments_count",  default: 0
   end
 
   create_table "votes", force: :cascade do |t|

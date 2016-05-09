@@ -4,6 +4,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+
   def create
     @user = User.new
     @user.name = params[:user][:name]
@@ -32,6 +33,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @comments = @user.comments
     @posts = @user.posts.visible_to(current_user)
+    @favorite_posts = @user.favorite_posts.visible_to(current_user)
   end
 end

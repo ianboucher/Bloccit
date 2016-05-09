@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_many :votes, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
+  has_many :favorite_posts, through: :favorites, source: :post
+
   # we register an inline callback directly after the before_save callback. The
   # callback { self.email = email.downcase } is triggered by the first callback.
   before_save { self.email = email.downcase }

@@ -12,8 +12,8 @@
        <div class="media-body">
          <h2 class="media-heading"><%= posts_or_comments(@user) %></h2>
          <small>
-           <%= pluralize(@user.posts.count, 'post') %>,
-           <%= pluralize(@user.comments.count, 'comment') %>
+           <%= pluralize(@user.posts_count, 'post') %>,
+           <%= pluralize(@user.comments_count, 'comment') %>
          </small>
        </div>
      </div>
@@ -22,10 +22,10 @@
 
 <!-- Display the user's posts and comments using partials -->
  <h2>Posts</h2>
- <%= render @user.posts %>
+ <%= render @posts %>
 
  <h2>Comments</h2>
- <%= render @user.comments %>
+ <%= render @comments %>
 
  <h2>Favorite Posts</h2>
- <%= render partial: 'posts/favorite_post', locals: {user: @user} %>
+ <%= render @favorite_posts %>
