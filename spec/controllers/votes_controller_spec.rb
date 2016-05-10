@@ -14,14 +14,14 @@ RSpec.describe VotesController, type: :controller do
   context "guest" do
     describe "POST up_vote" do
       it "redirects the user to the sign in view" do
-        post :up_vote, post_id: user_post.id
+        post :up_vote, format: :js, post_id: user_post.id
         expect(response).to redirect_to(new_session_path)
       end
     end
 
     describe "POST down_vote" do
       it "redirects the user to the sign in view" do
-        post :down_vote, post_id: user_post.id
+        post :down_vote, format: :js, post_id: user_post.id
         expect(response).to redirect_to(new_session_path)
       end
     end
@@ -38,71 +38,72 @@ RSpec.describe VotesController, type: :controller do
     # Check that vote increments by 1 the 1st time a user up-votes a post
       it "the users first vote increases number of post votes by one" do
         votes = user_post.votes.count
-        post :up_vote, post_id: user_post.id
+        post :up_vote, format: :js, post_id: user_post.id
         expect(user_post.votes.count).to eq(votes + 1)
       end
 
     # Check that vote doesn't increase if user repeatedly votes
       it "the users second vote does not increase the number of votes" do
-        post :up_vote, post_id: user_post.id
+        post :up_vote, format: :js, post_id: user_post.id
         votes = user_post.votes.count
-        post :up_vote, post_id: user_post.id
+        post :up_vote, format: :js, post_id: user_post.id
         expect(user_post.votes.count).to eq(votes)
       end
 
     # Check that up-voting increases point sum by 1
       it "increases the sum of post votes by one" do
         points = user_post.points
-        post :up_vote, post_id: user_post.id
+        post :up_vote, format: :js, post_id: user_post.id
         expect(user_post.points).to eq(points + 1)
       end
 
     # Check that users are redicted to correct view. HTTP_REFERER identifies
     # the page where the request originated.
-      it ":back redirects to posts show page" do
-        request.env["HTTP_REFERER"] = topic_post_path(my_topic, user_post)
-        post :up_vote, post_id: user_post.id
-        expect(response).to redirect_to([my_topic, user_post])
-      end
 
-      it ":back redirects to posts topic show" do
-        request.env["HTTP_REFERER"] = topic_path(my_topic)
-        post :up_vote, post_id: user_post.id
-        expect(response).to redirect_to(my_topic)
-      end
+      # it ":back redirects to posts show page" do
+      #   request.env["HTTP_REFERER"] = topic_post_path(my_topic, user_post)
+      #   post :up_vote, format: :js, post_id: user_post.id
+      #   expect(response).to redirect_to([my_topic, user_post])
+      # end
+      #
+      # it ":back redirects to posts topic show" do
+      #   request.env["HTTP_REFERER"] = topic_path(my_topic)
+      #   post :up_vote, format: :js, post_id: user_post.id
+      #   expect(response).to redirect_to(my_topic)
+      # end
     end
 
     describe "POST down_vote" do
       it "the users first vote increases number of post votes by one" do
         votes = user_post.votes.count
-        post :down_vote, post_id: user_post.id
+        post :down_vote, format: :js, post_id: user_post.id
         expect(user_post.votes.count).to eq(votes + 1)
       end
 
       it "the users second vote does not increase the number of votes" do
-        post :down_vote, post_id: user_post.id
+        post :down_vote, format: :js, post_id: user_post.id
         votes = user_post.votes.count
-        post :down_vote, post_id: user_post.id
+        post :down_vote, format: :js, post_id: user_post.id
         expect(user_post.votes.count).to eq(votes)
       end
 
       it "decreases the sum of post votes by one" do
         points = user_post.points
-        post :down_vote, post_id: user_post.id
+        post :down_vote, format: :js, post_id: user_post.id
         expect(user_post.points).to eq(points - 1)
       end
 
-      it ":back redirects to posts show page" do
-        request.env["HTTP_REFERER"] = topic_post_path(my_topic, user_post)
-        post :down_vote, post_id: user_post.id
-        expect(response).to redirect_to([my_topic, user_post])
-      end
+      # it ":back redirects to posts show page" do
+      #   request.env["HTTP_REFERER"] = topic_post_path(my_topic, user_post)
+      #   post :down_vote, format: :js, post_id: user_post.id
+      #   expect(response).to redirect_to([my_topic, user_post])
+      # end
 
-      it ":back redirects to posts topic show" do
-        request.env["HTTP_REFERER"] = topic_path(my_topic)
-        post :down_vote, post_id: user_post.id
-        expect(response).to redirect_to(my_topic)
-      end
+      # it ":back redirects to posts topic show" do
+      #   request.env["HTTP_REFERER"] = topic_path(my_topic)
+      #   post :down_vote, format: :js, post_id: user_post.id
+      #   expect(response).to redirect_to(my_topic)
+      # end
     end
   end
 end

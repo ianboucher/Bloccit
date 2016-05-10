@@ -1,0 +1,1 @@
+$('#js-vote_<%= @post.id %>').html("<%= escape_javascript(render partial: 'votes/voter', locals: { post: @post }) %>");

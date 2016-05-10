@@ -18,24 +18,8 @@
      </p>
      <!--Iterate over and display link to posts belonging to topic. Instance
      variables created in a contrller method are available in corresponding view -->
-     <% @topic.posts.each do |post| %>
-       <div class="media">
-         <%= render partial: 'votes/voter', locals: { post: post } %>
-         <div class="media-body">
-           <h4 class="media-heading">
-             <!--The helper takes a topic AND post and generates a path to the
-             posts show view  -->
-             <%= link_to post.title, topic_post_path(@topic, post) %>
-             <%= render partial: "labels/list", locals: { labels: post.labels } %>
-           </h4>
-           <!-- Add submission and comment details for each post in show view -->
-           <small>
-             submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
-             <%= post.comments.count %> Comments
-           </small>
-         </div>
-       </div>
-     <% end %>
+
+     <%= render partial: 'posts/post', locals: { post: @topic.posts } %>
 
      <% @topic.sponsored_posts.each do |sponsored_post| %>
        <div class="media">

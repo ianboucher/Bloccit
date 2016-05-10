@@ -1,5 +1,6 @@
 <div>
-  <%= render partial: 'votes/voter', locals: { post: @post } %>
+  <!-- DYNAMIC div tags needed to ensure correct vote updated with Ajax -->
+  <div id="js-vote_<%= @post.id %>"><%= render partial: 'votes/voter', locals: { post: @post } %></div>
   <h1>
      <%= @post.title %> <br>
      <small>

@@ -2,9 +2,9 @@
   <div class="vote-arrows pull-left">
     <!-- 3 divs - one for each arrow and one for the vote score -->
     <div><%= link_to " ", post_up_vote_path(post),
-      class: 'glyphicon glyphicon-chevron-up', method: :post %></div>
+      class: 'glyphicon glyphicon-chevron-up', method: :post, remote: true %></div>
     <div><strong><%= post.points %></strong></div>
     <div><%= link_to " ", post_down_vote_path(post),
-      class: 'glyphicon glyphicon-chevron-down', method: :post %></div>
+      class: 'glyphicon glyphicon-chevron-down', method: :post, remote: true %></div>
   </div>
 <% end %>

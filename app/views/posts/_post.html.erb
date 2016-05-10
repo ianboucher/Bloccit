@@ -1,13 +1,16 @@
-<div class="media">
-   <%= render partial: 'votes/voter', locals: { post: post } %>
-   <div class="media-body">
-     <h4 class="media-heading">
-       <%= link_to post.title, topic_post_path(post.topic, post) %>
-       <%= render partial: "labels/list", locals: { labels: post.labels } %>
-     </h4>
-     <small>
-       submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
-       <%= post.comments.count %> Comments
-     </small>
+<% @topic.posts.each do |post| %>
+  <div class="media">
+    <!-- DYNAMIC div tags needed to ensure correct vote updated with Ajax -->
+     <div id="js-vote_<%= post.id %>"><%= render partial: 'votes/voter', locals: { post: post } %></div>
+     <div class="media-body">
+       <h4 class="media-heading">
+         <%= link_to post.title, topic_post_path(post.topic, post) %>
+         <%= render partial: "labels/list", locals: { labels: post.labels } %>
+       </h4>
+       <small>
+         submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
+         <%= post.comments.count %> Comments
+       </small>
+     </div>
    </div>
- </div>
+ <% end %>
