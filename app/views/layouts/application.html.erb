@@ -38,6 +38,10 @@
 
       </ul>
       <div class="flash">
+        <!-- Note that in the case of Ajax flash messages the code below is
+        redundant as the notices are handled in the .js.erb files. However the
+        <div class="flash"> is crucial as the .js needs a container to prepend
+        the messages to -->
         <% if flash[:notice] %>
           <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
