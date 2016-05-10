@@ -13,8 +13,10 @@ class CommentsController < ApplicationController
 
     if @comment.save
       flash[:notice] = "Comment saved successfully."
+    #   redirect_to [@post.topic, @post]
     else
       flash[:alert] = "Comment failed to save."
+    #   redirect_to [@post.topic, @post]
     end
 
     respond_to do |format|
@@ -29,11 +31,9 @@ class CommentsController < ApplicationController
     @comment = @post.comments.find(params[:id])
 
     if @comment.destroy
-      flash[:alert] = "Comment couldn't be deleted. Try again."
-
+      #flash[:alert] = "Comment couldn't be deleted. Try again."
     else
-      flash[:notice] = "Comment was deleted successfully."
-
+      #flash[:notice] = "Comment was deleted successfully."
     end
 
     # the respond_to block gives our action the ability to return different
