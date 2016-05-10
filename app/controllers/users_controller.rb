@@ -21,7 +21,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # Why do we define confirm like this rather than simply calling 'create'?
+  # We define confirm like this rather than simply calling 'create' because params
+  # do not persist between actions so need to be defined again.
   def confirm
     @user = User.new
     @user.name = params[:user][:name]
