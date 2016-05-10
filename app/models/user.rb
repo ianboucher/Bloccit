@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   before_save { self.email = email.downcase }
   before_save { self.name = name.split(/(?=[A-Z])|(\s)/).map(&:capitalize).join unless name.nil? }
   before_save { self.role ||= :member } # set role to member if not specified
+  before_create :generate_auth_token
 
   validates :name, length: { minimum: 1, maxiumum: 100 }, presence: true
   # 1st password validation executes if password_digest is nil - i.e. if a password
@@ -37,6 +38,14 @@ class User < ActiveRecord::Base
   def favorite_for(post)
     # find favorites with post_id matching post. Return either the favorite or nil.
     favorites.where(post_id: post.id).first
+  end
+
+  def generate_auth_token
+    # generate base64 string of 64 bytes length
+    loop do
+      self.auth_token = SecureRandom.base64(64)
+      break unless User.find_by(auth_token: auth_token)
+    end
   end
 
   # def avatar_url(size)
